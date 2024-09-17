@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastAPI Todo List</title>
+    <link rel="stylesheet" href="{{ url_for('templates', path='styles.css') }}">
+</head>
+<body>
+
+    <a href="/bin"><ion-icon name="trash-bin-outline"></ion-icon></a>
+    <h1>Todo List</h1>
+    <form action="/add" method="post">
+        <input type="date" name="deadline" required>
+        <input type="text" name="todo" placeholder="Enter a new todo item" required>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        {% for item in todo_list %}
+            <li>
+                <span>
+                    <h3>Nom : </h3> {{ item.Name }}
+                </span>
+                <span>
+                    <h3>Date de création : </h3> {{ item.Date }}
+                </span>
+                <span>
+                    <h3>Deadline : </h3> {{ item.Deadline }}
+                </span>
+                <span>
+                    <a class="delete" href="/delete/{{ loop.index0 }}">Delete</a>
+                </span>
+            </li>
+        {% endfor %}
+    </ul>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
+
