@@ -24,7 +24,7 @@ engine = create_engine(sqlite_url, echo=True)
 def select_item():
     with Session(engine) as session:
         statement = select(Item)
-        results = session.execute(statement)
+        results = session.exec(statement)
         return results
 
 #DataBase usage

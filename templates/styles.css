@@ -1,13 +1,79 @@
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.container {
+    animation: fadeIn 0.5s ease-out;
+}
+
+h1 {
+    animation: pulse 2s infinite;
+}
+
+li {
+    transition: all 0.3s ease;
+}
+
+li:hover {
+    transform: translateX(5px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button, .delete, .restaure {
+    transition: all 0.3s ease;
+}
+
+button:hover, .delete:hover, .restaure:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes slideIn {
+    from { transform: translateX(-50%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+ul li {
+    animation: slideIn 0.5s ease-out forwards;
+    opacity: 0;
+}
+
+ul li:nth-child(1) { animation-delay: 0.1s; }
+ul li:nth-child(2) { animation-delay: 0.2s; }
+ul li:nth-child(3) { animation-delay: 0.3s; }
+/* Ajoutez plus si nécessaire */
+
 body {
     font-family: 'Arial', sans-serif;
-    margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: linear-gradient(135deg, #e0f7fa, #b3e5fc, #81d4fa);
     justify-content: center;
     align-items: center;
-
+    background: linear-gradient(135deg, #ffffff, #000000, #323232, #0b0b0b);
+    background-size: 100% 100%;
+    animation: gradientAnimation 15s cubic-bezier(.24,1.05,.8,.28) infinite;
+    overflow: hidden;
 }
+
 .container {
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 10px;
@@ -15,11 +81,13 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 500px;
     width: 100%;
+
 }
+
 h1 {
     display: flex;
     font-size: xxx-large;
-    color: #1976d2;
+    color: #ffffff;
     text-align: center;
     margin-bottom: 1.5rem;
     justify-content: center;
@@ -30,17 +98,25 @@ form {
     margin-bottom: 10%;
     width: 60%;
 }
-input[type="text"] {
+input[type="text"], input[type="date"] {
     justify-content: center;
     flex-grow: 1;
     padding: 0.5rem;
     font-size: 1rem;
-    border: 1px solid #bbdefb;
+    border: 1px solid #a5a5a5;
     border-radius: 4px 0 0 4px;
 }
+
+::-webkit-calendar-picker-indicator{
+    background-color: #ffffff;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
 button {
-    background-color: #1976d2;
-    color: white;
+    background-color: #818181;
+    color: #ffffff;
     border: none;
     padding: 0.5rem 1rem;
     font-size: 1rem;
@@ -48,21 +124,54 @@ button {
     transition: background-color 0.3s ease;
 }
 button:hover {
-    background-color: #1565c0;
+    background-color: #000000;
 }
 form button {
     border-radius: 0 4px 4px 0;
 }
+
+/* Styles existants... */
+
+.todolist-container {
+    align-items: center;
+    width: 100%;
+    height: 60vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.37) #ffffff;
+}
+
+/* Styles de la scrollbar pour Chrome, Edge, et Safari */
+.todolist-container::-webkit-scrollbar {
+    background: rgba(227, 242, 253, 0);
+    width: 0;
+}
+
+.todolist-container::-webkit-scrollbar-track {
+
+    border-radius: 4px;
+}
+
+.todolist-container::-webkit-scrollbar-thumb {
+    background-color: #000000;
+    border-radius: 4px;
+    border: 2px solid #000000;
+}
+
+.todolist-container::-webkit-scrollbar-thumb:hover {
+    background-color: #ffffff;
+}
+
 ul {
     list-style-type: none;
-    justify-content: space-between;
     padding: 0;
+    text-align: center;
+    justify-content: space-between;
     margin: auto;
     width: 50%;
-    text-align: center;
 }
-li {
 
+li {
     background-color: #e3f2fd;
     margin-bottom: 0.5rem;
     padding: 0.5rem;
@@ -70,32 +179,54 @@ li {
     align-items: center;
 }
 
+li span {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+li h3 {
+    margin: 0 5px 0 0;
+    font-size: 0.9em;
+}
+
+.delete {
+    margin-left: auto;
+}
+
+/* Ajustez la taille du conteneur principal si nécessaire */
+.container {
+    max-height: 80vh;
+    overflow: hidden;
+}
+
+/* Le reste de vos styles CSS... */
+
 a li {
     justify-content: right;
 }
 
 li .delete {
-    background-color: #f44336;
-    color: white;
+    background-color: rgba(255, 105, 91, 0.62);
+    color: #ffffff;
     text-decoration: none;
     border-radius: 0 4px;
     padding: 0.5rem;
 }
 li .delete:hover {
-    background-color: #d32f2f;
-    text-decoration: underline;
+    background-color: rgb(211, 47, 47);
 }
 
 li .restaure {
-    background-color: rgba(106, 213, 72, 0.81);
-    color: white;
+    background-color: rgba(106, 213, 72, 0.69);
+    color: rgb(255, 255, 255);
     text-decoration: none;
     border-radius: 0 4px;
     padding: 0.5rem;
 }
 li .restaure:hover {
-    background-color: #46a12a;
-    text-decoration: underline;
+    background-color: rgb(70, 161, 42);
 }
 
 li span {
@@ -111,6 +242,10 @@ ion-icon {
     font-size: 4em;
     position: absolute;
     color: #292929;
-    margin: 2rem
-;
+    margin: 2rem;
+    transition: all 0.3s ease;
+}
+
+ion-icon:hover {
+    transform: rotate(15deg) scale(1.1);
 }
