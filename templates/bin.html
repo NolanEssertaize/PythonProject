@@ -7,26 +7,32 @@
     <link rel="stylesheet" href="{{ url_for('templates', path='styles.css') }}">
 </head>
 <body>
-    <a href="/"><ion-icon name="arrow-undo-outline"></ion-icon></a>
+    <a href="/"><ion-icon name="reload-outline"></ion-icon></a>
     <h1>Bin</h1>
     <div class="todolist-container">
         <ul>
-            {% for trash in bin_list %}
-                <li>
-                    <span>
-                        <h3>Nom : </h3> {{ trash.Name }}
+            {% for item in db %}
+                <li class="{{ item.tag }}">
+                   <span>
+                    <h3>Nom : </h3> {{ item.nom }}
                     </span>
                     <span>
-                        <h3>Date de création : </h3> {{ trash.Date }}
+                        <h3>Tag : </h3> {{ item.tag }}
                     </span>
                     <span>
-                        <h3>Deadline : </h3> {{ trash.Deadline }}
+                        <h3>Description : </h3> {{ item.description }}
                     </span>
                     <span>
-                        <a class="restaure" href="/restaure/{{ loop.index0 }}">Restaurer</a>
+                        <h3>Deadline : </h3> {{ item.deadline }}
                     </span>
                     <span>
-                        <a class="delete" href="/deletetrash/{{ loop.index0 }}">For ever</a>
+                        <h3>Temp de création : </h3> {{ item.createdtime }}
+                    </span>
+                    <span>
+                        <a class="restaure" href="/restaure/{{ item.id }}">Restaurer</a>
+                    </span>
+                    <span>
+                        <a class="delete" href="/deletetrash/{{ item.id }}">For ever</a>
                     </span>
                 </li>
             {% endfor %}

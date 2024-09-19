@@ -8,38 +8,44 @@
 </head>
 <body>
 
-    <a href="/bin"><ion-icon name="trash-bin-outline"></ion-icon></a>
+    <a href="/bin"><ion-icon name="backspace-outline"></ion-icon></a>
     <h1>Todo List</h1>
     <form action="/add" method="post">
-        <input type="date" name="deadline" required>
+
         <input type="text" name="todo" placeholder="Enter a new todo item" required>
         <button type="submit">Add</button>
+        <div class="button-form">
+            <input type="date" name="deadline" required>
+            <select name="tag">
+                <option value="Todo">Todo</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option>
+            </select>
+        </div>
     </form>
     <div class="todolist-container">
         <ul>
-        {% for item in todo_list %}
-            <li>
-                <span>
-                    <h3>Nom : </h3> {{ item.Name }}
-                </span>
-                <span>
-                    <h3>Date de création : </h3> {{ item.Date }}
-                </span>
-                <span>
-                    <h3>Deadline : </h3> {{ item.Deadline }}
-                </span>
-                <span>
-                    <a class="delete" href="/delete/{{ loop.index0 }}">Delete</a>
-                </span>
-            </li>
-        {% endfor %}
-        {% for db in results %}
-            <li>
-                hey
-                <span>
-                    <h3>db : </h3> {{ db }}
-                </span>
-            </li>
+        {% for item in db %}
+                <li class="{{ item.tag }}">
+                    <span>
+                        <h3>Nom : </h3> {{ item.nom }}
+                    </span>
+                    <span>
+                        <h3>Tag : </h3> {{ item.tag }}
+                    </span>
+                    <span>
+                        <h3>Description : </h3> {{ item.description }}
+                    </span>
+                    <span>
+                        <h3>Deadline : </h3> {{ item.deadline }}
+                    </span>
+                    <span>
+                        <h3>Temp de création : </h3> {{ item.createdtime }}
+                    </span>
+                    <span>
+                        <a class="delete" href="/delete/{{ item.id }}">Delete</a>
+                    </span>
+                </li>
         {% endfor %}
         </ul>
     </div>
