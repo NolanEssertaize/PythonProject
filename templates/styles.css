@@ -261,14 +261,18 @@ li h3 {
     margin: 0.5rem;
 }
 
+li ion-icon {
+    display: flex;
+    text-align: right;
+}
+
 ion-icon {
     font-size: 4em;
     position: absolute;
     color: var(--primary);
-    margin: 2rem;
     transition: all 0.3s ease;
 }
 
 ion-icon:hover {
-    transform: rotate(15deg) scale(1.1);
+    transform: scale(1.1);
 }
