@@ -1,6 +1,5 @@
-from email.policy import default
-from tkinter.font import names
 import hashlib
+import jwt
 
 from certifi import where
 from fastapi import FastAPI, Request, Form, HTTPException, status, Depends
@@ -16,6 +15,7 @@ from typing import Annotated, Union
 from markdown_it.rules_block import table
 from sqlalchemy import result_tuple
 from sqlmodel import Field, Session, SQLModel, create_engine, select
+from typing_extensions import Buffer
 
 #Token
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -24,15 +24,6 @@ class User(BaseModel):
     id: int
     username: str
     disabled: Union[bool, None] = None
-
-def decode_token(token):
-    return User(
-        username=token, email="john@example.com", full_name="John Doe"
-    )
-
-async def get_current_user(token: Annotated[str, Depends(oauth2_scheme)]):
-    user = decode_token(token)
-    return user
 
 #DataBase
 class Todousers(SQLModel, table=True):
@@ -140,16 +131,21 @@ async def add(name: str = Form("username"), password: str = Form("password")):
         statement = select(Todousers).where(Todousers.login == name)
         results = session.exec(statement).all()
         print(f"\n Commentaire {results}\nFor username : {name}")
-        hash_password = hashlib.sha256(b"password").hexdigest()
+        hash_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
+        user_info = []
+        if not results:
+            raise HTTPException(status_code=400, detail="User unknown")
         for user in results:
+            user_info = user
             if user.password != hash_password:
                 raise HTTPException(status_code=400, detail="Incorrect password")
         else:
-            return RedirectResponse(url="/", status_code=303)
+            return {"access_token": user_info, "token_type": "bearer" }
 
 @app.post("/register")
 async def add(name: str = Form("name"), password: str = Form("password")):
-    hash_password = hashlib.sha256(b"password").hexdigest()
+
+    hash_password = hashlib.sha256(password.encode("utf-8")).hexdigest()
     new_user = Todousers(login= name, password=hash_password)
     with Session(engine) as session:
         session.add(new_user)
@@ -168,7 +164,6 @@ async def add(tag: str = Form("tag"), todo: str = Form("todo"), deadline: str = 
 async def delete(item_id: int):
     updating_bin_status_with_id(item_id, "True")
     return RedirectResponse(url="/", status_code=303)
-
 
 @app.get("/bin")
 async def show_bin(request: Request):
