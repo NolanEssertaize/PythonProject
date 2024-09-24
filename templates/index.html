@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('templates', path='styles.css') }}">
 </head>
 <body>
+    <script src="/static/js/script.js"></script>
+    <script>checkAuth();</script>
+    <button onclick="logout()">Se déconnecter</button>
     <a href="/bin"><ion-icon name="backspace-outline"></ion-icon></a>
     <h1>Todo List</h1>
     <a href="/connexion"><ion-icon name="person-outline"></ion-icon></a>
