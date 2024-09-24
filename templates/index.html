@@ -9,7 +9,7 @@
 <body>
     <a href="/bin"><ion-icon name="backspace-outline"></ion-icon></a>
     <h1>Todo List</h1>
-    <a href="/login"><ion-icon name="person-outline"></ion-icon></a>
+    <a href="/connexion"><ion-icon name="person-outline"></ion-icon></a>
     <form action="/add" method="post">
         <input type="text" name="todo" placeholder="Enter a new todo item" required>
         <button type="submit">Add</button>
@@ -27,7 +27,7 @@
         {% for item in db %}
                 <li class="{{ item.tag }}">
                     <span>
-                        <h3>Nom : </h3> {{ item.nom }}
+                        <h3>Nom : </h3> {{ item.name }}
                         <a href="edit/{{ item.id }}/{{ item.tag }}"><ion-icon name="checkmark-outline"></ion-icon></a>
                     </span>
                     <span>
